@@ -2,8 +2,6 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="./browserMqtt.js"></script>
     <style>
       body {
         min-width: 310px;
@@ -17,77 +15,104 @@
         text-align: center;
       }
     </style>
+    <style type="text/css">
+      thead,
+      tbody {
+        display: block;
+      }
+
+      tbody {
+        height: 400px; /* Just for the demo          */
+        overflow-y: auto; /* Trigger vertical scroll    */
+        overflow-x: hidden; /* Hide the horizontal scroll */
+      }
+      td,
+      th {
+        width: 400px;
+      }
+      .center-block {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .buttonExport {
+        left: 50%;
+        position: relative;
+      }
+      .buttonImport {
+        left: 75%;
+        position: relative;
+      }
+      .buttonConnect {
+        left: 10%;
+        position: relative;
+      }
+      .container {
+        margin-top: 50px;
+        border: 0;
+        zoom: 1; /* IE6&7 */
+      }
+
+      .container:before,
+      .container:after {
+        content: "";
+        display: table;
+      }
+
+      .container:after {
+        clear: both;
+      }
+    </style>
   </head>
   <body>
     <h2>Sismographe Neuchâtel</h2>
-    <div id="chart-X-Original" class="container"></div>
+    <div class="container">
+      <button class="buttonConnect" id="Connect-Button">
+        Connect To Broker
+      </button>
+      <button class="buttonImport" id="Import-Button">Load Data</button>
+    </div>
+    <div class="container">
+      <input
+        class="center-block"
+        list="PeriodDataList"
+        id="PeriodToDisplayInput"
+        type="list"
+      />
+      <datalist id="PeriodDataList">
+        <option value="1 minute"></option>
+        <option value="5 minutes"></option>
+        <option value="10 minutes"></option>
+        <option value="1 hour"></option>
+        <option value="2 hours"></option>
+        <option value="6 hours"></option>
+        <option value="12 hours"></option>
+        <option value="24 hours"></option>
+        <option value="1 week"></option>
+        <option value="Custom"></option>
+      </datalist>
+    </div>
+    <div class="container" id="chart-X-Original"></div>
+    <div class="container" id="chart-X-Original-Table-Value">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Valeur</th>
+          </tr>
+        </thead>
+        <tbody id="chart-X-Original-Table-Content"></tbody>
+      </table>
+    </div>
+    <div>
+      <button class="buttonExport" id="Export-Button">Export Data</button>
+    </div>
+    <script src="./table.js" defer></script>
+    <script src="https://code.highcharts.com/highcharts.js" defer></script>
+    <script src="./chart.js" defer></script>
+    <script src="./dataParser.js" defer></script>
+    <script src="./browserMqtt.js" defer></script>
+    <script src="./mqtt.js" defer></script>
+    <script src="./listener.js" defer></script>
   </body>
-
-  <script>
-    var chartT = new Highcharts.Chart({
-      chart: { renderTo: "chart-X-Original" },
-      title: { text: "X Axis - Original" },
-      series: [
-        {
-          showInLegend: false,
-          data: [],
-        },
-      ],
-      plotOptions: {
-        line: { animation: false, dataLabels: { enabled: true } },
-        series: { color: "#059e8a" },
-      },
-      xAxis: { type: "datetime", dateTimeLabelFormats: { second: "%H:%M:%S" } },
-      yAxis: {
-        max: 0.08,
-        min: -0.08,
-      },
-      credits: { enabled: false },
-      plotOptions: {
-        enabled: false,
-      },
-    });
-
-    host = "ws://broker.hivemq.com:8000/mqtt";
-
-    const options = {
-      keepalive: 60,
-      clientId: "kAgQ!aHyo6HyFEz",
-      protocolId: "MQTT",
-      protocolVersion: 4,
-      clean: true,
-      reconnectPeriod: 1000,
-      connectTimeout: 30 * 1000,
-      will: {
-        topic: "WillMsg",
-        payload: "Connection Closed abnormally..!",
-        qos: 0,
-        retain: false,
-      },
-    };
-
-    console.log("Connecting mqtt client");
-    const client = mqtt.connect(host, options);
-
-    client.on("error", (err) => {
-      console.log("Connection error: ", err);
-      client.end();
-    });
-
-    client.on("connect", () => {
-      console.log("Connected");
-      client.subscribe("demoSismo/testSensor");
-    });
-
-    client.on("message", (topic, payload) => {
-      var x = new Date().getTime();
-      var y = parseFloat(payload);
-      //console.log(this.responseText);
-      if (chartT.series[0].data.length > 1000) {
-        chartT.series[0].addPoint([x, y], true, true, true);
-      } else {
-        chartT.series[0].addPoint([x, y], true, false, true);
-      }
-    });
-  </script>
 </html>
