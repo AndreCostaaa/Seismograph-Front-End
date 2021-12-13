@@ -43,7 +43,7 @@ function onMessage(topic, payload) {
   if (topic == "demoSismo/testSensor") {
     addPoint(payload);
   } else {
-    console.log(topic + " " + payload);
+    //console.log(topic + " " + payload);
   }
 }
 

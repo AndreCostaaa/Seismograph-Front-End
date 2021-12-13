@@ -22,7 +22,7 @@
       }
 
       tbody {
-        height: 400px; /* Just for the demo          */
+        height: 250px; /* Just for the demo          */
         overflow-y: auto; /* Trigger vertical scroll    */
         overflow-x: hidden; /* Hide the horizontal scroll */
       }
@@ -40,7 +40,7 @@
         position: relative;
       }
       .buttonImport {
-        left: 75%;
+        left: 10%;
         position: relative;
       }
       .buttonConnect {
@@ -48,11 +48,14 @@
         position: relative;
       }
       .container {
-        margin-top: 50px;
+        margin-top: 20px;
         border: 0;
         zoom: 1; /* IE6&7 */
       }
-
+      .align-side-to-side {
+        left: 40%;
+        position: relative;
+      }
       .container:before,
       .container:after {
         content: "";
@@ -70,29 +73,44 @@
       <button class="buttonConnect" id="Connect-Button">
         Connect To Broker
       </button>
-      <button class="buttonImport" id="Import-Button">Load Data</button>
+      <label for="Connect-Button">Real Time:</label>
     </div>
     <div class="container">
       <input
-        class="center-block"
-        list="PeriodDataList"
-        id="PeriodToDisplayInput"
-        type="list"
+        class="buttonConnect"
+        type="file"
+        id="csvFileInput"
+        accept=".csv"
       />
-      <datalist id="PeriodDataList">
-        <option value="1 minute"></option>
-        <option value="5 minutes"></option>
-        <option value="10 minutes"></option>
-        <option value="1 hour"></option>
-        <option value="2 hours"></option>
-        <option value="6 hours"></option>
-        <option value="12 hours"></option>
-        <option value="24 hours"></option>
-        <option value="1 week"></option>
-        <option value="Custom"></option>
+      <button class="buttonImport" id="Load-Data">Load Data</button>
+      <label for="csvFileInput">Real Time:</label>
+    </div>
+
+    <div class="container" id="chart-X-Original"></div>
+    <div class="container">
+      <input
+        class="align-side-to-side"
+        id="PeriodToDisplayInput"
+        type="number"
+        min="0"
+        max="24"
+        size="10"
+        value="1"
+      />
+      <input
+        class="align-side-to-side"
+        id="PeriodInput"
+        type="list"
+        list="PeriodList"
+        size="10"
+        value="hours"
+      />
+      <datalist id="PeriodList">
+        <option value="minutes"></option>
+        <option value="hours"></option>
+        <option value="days"></option>
       </datalist>
     </div>
-    <div class="container" id="chart-X-Original"></div>
     <div class="container" id="chart-X-Original-Table-Value">
       <table>
         <thead>
