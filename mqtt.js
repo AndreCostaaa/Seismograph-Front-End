@@ -2,7 +2,7 @@ let client = null;
 const host = "ws://broker.hivemq.com:8000/mqtt";
 const options = {
   keepalive: 60,
-  clientId: "kAgQ!" + Math.random().toString(16).substr(2, 8),
+  clientId: "kAgQ!d" + Math.random().toString(16).substr(2, 8),
   protocolId: "MQTT",
   protocolVersion: 4,
   clean: true,
