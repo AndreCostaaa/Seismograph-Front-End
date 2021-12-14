@@ -40,7 +40,7 @@ function onConnection() {
 }
 
 function onMessage(topic, payload) {
-  if (topic == "demoSismo/testSensor") {
+  if (topic == "demoSismo/xAxisOriginal") {
     addPoint(payload);
   } else {
     //console.log(topic + " " + payload);
