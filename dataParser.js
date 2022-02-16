@@ -2,8 +2,10 @@ function addPoint(value) {
   const date = new Date();
   const timeMs = date.getTime();
   const explicitTime = new Date(timeMs).toLocaleString();
+  value = new TextDecoder().decode(value);
+  let points = value.split("|");
 
-  let floatVal = parseFloat(value);
+  let floatVal = parseFloat(points[0]);
   addPointToChart(timeMs, floatVal);
 
   addPointToTable(explicitTime, floatVal);

@@ -19,7 +19,6 @@ const options = {
 const topics = ["demoSismo/#"];
 
 function connectToMqttBroker() {
-  console.log("Connecting mqtt broker");
   client = mqtt.connect(host, options);
 }
 
@@ -35,12 +34,11 @@ function onConnectionError(err) {
 }
 
 function onConnection() {
-  console.log("Connected");
   subscribeToTopics();
 }
 
 function onMessage(topic, payload) {
-  if (topic == "demoSismo/xAxisOriginal") {
+  if (topic == "demoSismo/measurements_um") {
     addPoint(payload);
   } else {
     //console.log(topic + " " + payload);

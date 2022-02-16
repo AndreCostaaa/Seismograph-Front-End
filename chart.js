@@ -31,8 +31,8 @@ function onLoad() {
       dateTimeLabelFormats: { second: "%H:%M:%S" },
     },
     yAxis: {
-      max: 0.1,
-      min: -0.1,
+      max: 80,
+      min: -80,
     },
     credits: { enabled: false },
     plotOptions: {
