@@ -21,18 +21,22 @@ function onLoad() {
         showInLegend: false,
         data: [],
       },
+      {
+        showInLegend: false,
+        data: [],
+      },
     ],
     plotOptions: {
       line: { animation: false, dataLabels: { enabled: true } },
-      series: { color: "#059e8a" },
+      series: { color: "#059e8a", color: "#ff0000" },
     },
     xAxis: {
       type: "datetime",
       dateTimeLabelFormats: { second: "%H:%M:%S" },
     },
     yAxis: {
-      max: 80,
-      min: -80,
+      max: 200,
+      min: -200,
     },
     credits: { enabled: false },
     plotOptions: {
@@ -41,11 +45,11 @@ function onLoad() {
   });
 }
 
-function addPointToChart(x, y) {
-  if (chartT.series[0].data.length > hours_to_display * T * 3600) {
-    chartT.series[0].addPoint([x, y], true, true, true);
+function addPointToChart(idx, x, y) {
+  if (chartT.series[idx].data.length > hours_to_display * T * 3600) {
+    chartT.series[idx].addPoint([x, y], true, true, true);
   } else {
-    chartT.series[0].addPoint([x, y], true, false, true);
+    chartT.series[idx].addPoint([x, y], true, false, true);
   }
 }
 

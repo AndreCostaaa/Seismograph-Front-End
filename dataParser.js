@@ -5,10 +5,12 @@ function addPoint(value) {
   value = new TextDecoder().decode(value);
   let points = value.split("|");
 
-  let floatVal = parseFloat(points[0]);
-  addPointToChart(timeMs, floatVal);
+  let xOriginal = parseFloat(points[0]);
+  let xAmplified = parseFloat(points[1]);
 
-  addPointToTable(explicitTime, floatVal);
+  addPointToChart(0, timeMs, xOriginal);
+  addPointToChart(1, timeMs, xAmplified);
+  addPointToTable(explicitTime, points[0] + " " + points[1]);
   //data.push([explicitTime, value]);
 }
 
