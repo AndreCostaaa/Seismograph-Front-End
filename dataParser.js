@@ -11,19 +11,20 @@ function addPoint(value) {
   addPointToChart(0, timeMs, xOriginal);
   addPointToChart(1, timeMs, xAmplified);
   addPointToTable(explicitTime, points[0] + " " + points[1]);
-  //data.push([explicitTime, value]);
 }
 
 function convertArrayToCSV() {
-  let csv = "MS, Date, Hour, Value\n";
+  let csv = "MS, Date, Hour, Value X Original, Value X Multiplied\n";
   const data = getDataFromChart();
-  data.forEach((value, index, arr) => {
+  data.forEach((value, index) => {
     csv +=
       value[0] +
       ", " +
       new Date(value[0]).toLocaleString() +
       ", " +
       value[1] +
+      ", " +
+      value[2] +
       "\n";
   });
   return csv;
